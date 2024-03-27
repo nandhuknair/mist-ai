@@ -1,0 +1,208 @@
+<link rel="stylesheet" href="/stylesheets/home.css">
+<script src="https://cdn.jsdelivr.net/gh/cosmogicofficial/quantumalert@latest/minfile/quantumalert.js" charset="utf-8"></script>
+<div class="sidebar close">
+    <div class="logo-details">
+      <i class="fa-solid fa-robot"></i>
+        <span class="logo_name">Neos AI </span>
+    </div>
+    <ul class="nav-links">
+{{#each chats}}
+        <li>
+            <a href="/chats/{{this._id}}">
+                <i class="fa-regular fa-message"></i>
+                <span data-id="{{this._id}}" class="link_name">{{this.message}}</span>
+            </a>
+        </li>
+    
+{{/each}}
+        <li>
+            <div class="profile-details">
+                <div class="profile-content">
+                    <!--<img src="image/profile.jpg" alt="profileImg">-->
+                </div>
+                <div class="name-job">
+                    <div class="profile_name">{{user}}</div>
+                    <div class="job">Click Herer to Logout</div>
+                </div>
+                <a href="/profile/logout">
+                        <i class='bx bx-log-out'></i>
+                </a>
+                
+            </div>
+        </li>
+    </ul>
+</div>
+<section class="home-section">
+    <div class="home-content">
+        <i class='bx bx-menu'></i>
+        <span class="text">Neos AI Chatbot</span>
+    </div>
+    <div class="chat-box">
+
+        <div class="responsearea">
+
+        </div>
+
+
+
+        <div class="messageBox">
+            <div class="fileUploadWrapper">
+                <label for="file">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
+                        <circle stroke-width="20" stroke="#6c6c6c" fill="none" r="158.5" cy="168.5" cx="168.5"></circle>
+                        <path stroke-linecap="round" stroke-width="25" stroke="#6c6c6c" d="M167.759 79V259"></path>
+                        <path stroke-linecap="round" stroke-width="25" stroke="#6c6c6c" d="M79 167.138H259"></path>
+                    </svg>
+                    <span class="tooltip">Add an image</span>
+                </label>
+                <input type="file" id="file" name="file" />
+            </div>
+            <input required="" placeholder="Start Chating with AI " type="text" id="messageInput" />
+            <button id="sendButton">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                    <path fill="none"
+                        d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888">
+                    </path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67" stroke="#6c6c6c"
+                        d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+
+
+<script>
+
+
+// const id = `{{chatId}}`
+/*
+
+const chatOpen = document.querySelectorAll('.link_name');
+
+
+chatOpen.forEach((chat) => {
+    chat.addEventListener('click', (e) => {
+        const id = chat.getAttribute('data-id');
+
+
+        fetch('/chats', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },  
+            body: JSON.stringify({
+                id: id
+            })
+        })
+    })
+})
+
+*/
+
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+            let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+            arrowParent.classList.toggle("showMenu");
+        });
+    }
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+    });
+
+
+
+
+    document.getElementById('sendButton').addEventListener('click', function (e) {
+        const sendButton = document.getElementById('sendButton');
+        const messageInput = document.getElementById('messageInput');
+        var responseArea = document.querySelector('.responsearea');
+        var newMsgContainer = document.createElement('div');
+        newMsgContainer.classList.add('msgcontainer');
+        newMsgContainer.innerHTML = `
+        <div class="icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="content">
+            <h1>You</h1>
+            <p>${messageInput.value}</p>
+        </div>
+    `;
+        msg = messageInput.value
+        messageInput.value = '';
+
+        responseArea.appendChild(newMsgContainer);
+
+        sendButton.style.display = 'none';
+       
+        var responseAreaBot = document.querySelector('.responsearea');
+        var newMsgContainerBot = document.createElement('div');
+        newMsgContainerBot.classList.add('msgcontainer');
+        newMsgContainerBot.innerHTML = `
+        <div class="icon">
+           <i class="fa-solid fa-robot"></i>
+        </div>
+        <div class="content">
+           <div class="loaderRectangle">
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</div>
+        </div>
+    `;
+
+        responseAreaBot.appendChild(newMsgContainerBot);
+
+       
+        fetch('/prompt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: msg,
+                id :123
+            })
+        }).then(response => response.json())
+            .then(data => {
+
+                console.log(data);
+                if (data.error) {
+                    
+                        return  Qual.errordb("Oh no !","Sorry There is only  limited request available ");
+                }
+                responseAreaBot.removeChild(newMsgContainerBot);
+                var responseArea = document.querySelector('.responsearea');
+                var newMsgContainer = document.createElement('div');
+                newMsgContainer.classList.add('msgcontainer');
+                newMsgContainer.innerHTML = `
+        <div class="icon">
+           <i class="fa-solid fa-robot"></i>
+        </div>
+        <div class="content">
+            <h1>AI</h1>
+            <p>${data.response}</p>
+        </div>`;
+                messageInput.value = '';
+                responseArea.appendChild(newMsgContainer);
+
+               sendButton.style.display = 'inline-block';
+               const chatBox = document.querySelector('.chat-box');
+
+// Scroll to the bottom of the chat-box div
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+            })
+
+    });
+</script>

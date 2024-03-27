@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mist Ai | Login</title>
+
+<link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<style>
+  /* Importing fonts from Google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Reseting */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #ecf0f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.wrapper {
+    max-width: 350px;
+    min-height: 500px;
+    margin: 80px auto;
+    padding: 40px 30px 30px 30px;
+    background-color: #ecf0f3;
+    border-radius: 15px;
+    box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff;
+}
+
+.logo {
+    width: 80px;
+    margin: auto;
+}
+
+.logo img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+}
+
+.wrapper .name {
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: 1.3px;
+    padding-left: 10px;
+    color: #555;
+}
+
+.wrapper .form-field input {
+    width: 100%;
+    display: block;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.2rem;
+    color: #666;
+    padding: 10px 15px 10px 10px;
+    /* border: 1px solid red; */
+}
+
+.wrapper .form-field {
+    padding-left: 10px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+}
+
+.wrapper .form-field .fas {
+    color: #555;
+}
+
+.wrapper .btn {
+    box-shadow: none;
+    width: 100%;
+    height: 40px;
+    background-color: #03A9F4;
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+    letter-spacing: 1.3px;
+}
+
+.wrapper .btn:hover {
+    background-color: #039BE5;
+}
+
+.wrapper a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: #03A9F4;
+}
+
+.wrapper a:hover {
+    color: #039BE5;
+}
+p{
+  font-size: 12px;
+}
+
+@media(max-width: 380px) {
+    .wrapper {
+        margin: 30px 20px;
+        padding: 40px 15px 15px 15px;
+    }
+}
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="logo">
+        <img src="/assets/img/logo.png" alt="">
+    </div>
+    <div class="text-center mt-4 name">
+        MIST AI
+    </div>
+    <form class="p-3 mt-3" id="signupForm">
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user me-3"></span>
+            <input type="text" onkeyup="validateName()" name="userName" id="userName" placeholder="Username">
+          </div>
+          <p style="color: red;" id="name-error"></p>
+        <div class="form-field d-flex align-items-center">
+          <span class="fa-solid me-3 fa-envelope"></span>
+          <input type="email" onkeyup="validateEmail()" name="email" id="email" placeholder="Email">
+      </div>
+      <p style="color: red;" id="email-error"></p>
+      <div class="form-field d-flex align-items-center">
+        <span class="fa-solid me-3 fa-mobile-screen-button"></span>
+        <input type="number" name="mobile" onkeyup="validateNumber()" id="mobile" placeholder="Mobile">
+    </div>
+    <p style="color: red;" id="mobile-error"></p>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas me-3 fa-key"></span>
+            <input type="password" name="password" onkeyup="validatePassword()" id="password" placeholder="Password">
+        </div>
+        <p style="color: red;" id="password-error"></p>
+        <button class="btn mt-3">Login</button>
+    </form>
+    <div class="text-center fs-6">
+        <p>Are you a user ? <a href="/login">Login</a></p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+  document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const isNameValid = validateName();
+    const isEmailValid = validateEmail();
+    const isNumberValid = validateNumber();
+    const isPasswordValid = validatePassword();
+
+    if (!(isEmailValid && isEmailValid && isNumberValid && isPasswordValid)) {
+      return;
+    } else {
+      const userName = document.getElementById('userName').value;
+      const email = document.getElementById('email').value;
+      const number = document.getElementById('mobile').value;
+      const password = document.getElementById('password').value;
+
+      console.log('Reached near the fetch request');
+      try {
+        const response = await fetch('/signupAction', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userName: userName,
+            email: email,
+            number: number,
+            password: password
+          })
+        });
+
+        const responseData = await response.json();
+        console.log(responseData, + 'Data got from the backend ');
+
+        if (response.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: responseData.message
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: responseData.message
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  });
+</script>
+
+
+<script src="/javascript/validation.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
