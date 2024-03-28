@@ -3,7 +3,7 @@
 
 Welcome to Mist AI, a web application designed to provide an interactive chat experience with an AI-powered assistant. Leveraging the power of machine learning, Mist AI engages users in conversation, offering responses and insights on various topics. With a sleek and user-friendly interface, users can seamlessly interact with Mist AI, receiving prompt and informative replies. Built with MongoDB, Express.js, JavaScript, and EJS, Mist AI offers a dynamic platform for engaging conversations and learning opportunities.
 
-<img src="/public/assets/img/Screenshot 2024-03-28 175342.png" alt="Icon" width="30">
+
 
 ## Table of Contents
 
