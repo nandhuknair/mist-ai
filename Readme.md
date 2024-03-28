@@ -1,4 +1,5 @@
-# Your Project Name <img src="icon-url" alt="Icon" width="30">
+# Your Project Name <img src="https://incubator.ucf.edu/wp-content/uploads/2023/07/artificial-intelligence-new-technology-science-futuristic-abstract-human-brain-ai-technology-cpu-central-processor-unit-chipset-big-data-machine-learning-cyber-mind-domination-generative-ai-scaled-1-1536x1024.jpg" alt="Icon" width="30">
+# Your Project Name <img src="" alt="Icon" width="30">
 
 Short description or introduction of your project.
 
