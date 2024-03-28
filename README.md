@@ -43,9 +43,10 @@ Welcome to Mist AI, a web application designed to provide an interactive chat ex
 
 ## User Interact
 
-1.Signup and just log in.
-2.Interact with mist ai
-3.Don't worry your conversation history will be shown and also safe 
+1. Signup and just log in.
+2. Interact with mist ai
+3. Don't worry your conversation history will be shown and also safe 
+
 
 
 
